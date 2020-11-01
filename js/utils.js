@@ -1,3 +1,11 @@
-export const validateForm = (login, password) => {
-  return login.length !== 0 && password.length !== 0;
+export const validateForm = (data) => {
+  return data.trim().length !== 0;
+};
+
+export const getUserData = () => {
+  return  JSON.parse(localStorage.getItem('user')) || null;
+};
+
+export const saveUserData = userData => {
+  localStorage.setItem('user', JSON.stringify(userData));
 };

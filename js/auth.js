@@ -1,4 +1,5 @@
 import { band, band2 } from './modalScroll.js';
+import { validateForm, getUserData, saveUserData } from './utils.js';
 
 const
   buttonAuth = document.querySelector('.button-auth'),
@@ -10,7 +11,7 @@ const
 ;
 
 // Открытие модального окна
-const modalAuthOpen = () => {
+export const modalAuthOpen = () => {
   modalAuth.classList.add('is-open');
   band();
 };
@@ -25,14 +26,6 @@ const modalAuthClose = () => {
 
 // Получение и Сохранение данных пользователя в localStorage
 let login = null;
-
-const getUserData = () => {
-  login = JSON.parse(localStorage.getItem('user')) || null;
-};
-
-const saveUserData = userData => {
-  localStorage.setItem('user', JSON.stringify(userData));
-};
 
 // Если пользователь авторизован
 const authorized = () => {
@@ -70,11 +63,11 @@ const noAuthorized = () => {
 
     let values = {};
     for (const [key, name] of dataForm) {
-      if (!name) {
+      if (!validateForm(name)) {
         alert('Авторизуйтесь в системе');
         return false;
       }
-      values[key] = name;
+      values[key] = name.trim();
     }
 
     saveUserData(values);
@@ -98,6 +91,7 @@ const noAuthorized = () => {
     if (target.classList.contains('close-auth') ||
       target.classList.contains('is-open')) {
       modalAuthClose();
+      logInForm.reset();
     }
   };
   modalAuth.addEventListener('click', eventCloseModal);
@@ -108,7 +102,7 @@ const noAuthorized = () => {
 
 // Проверка авторизации пользователя
 const checkOut = () => {
-  getUserData();
+  login = getUserData();
 
   if (login) {
     authorized();
