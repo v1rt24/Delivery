@@ -1,5 +1,6 @@
 import { band, band2 } from './modalScroll.js';
 import { validateForm, getUserData, saveUserData } from './utils.js';
+import { updateUserData } from './basket.js';
 
 const
   buttonAuth = document.querySelector('.button-auth'),
@@ -32,13 +33,13 @@ const authorized = () => {
   buttonAuth.style.display = 'none';
   userName.textContent = login.login;
   userName.style.display = 'inline';
-  cartButton.style.display = 'block';
-  buttonOut.style.display = 'block';
+  cartButton.style.display = 'flex';
+  buttonOut.style.display = 'flex';
 
   // Выход из учётной записи
   const logout = () => {
     localStorage.removeItem('user');
-    buttonAuth.style.display = 'block';
+    buttonAuth.style.display = 'flex';
     userName.textContent = '';
     userName.style.display = 'none';
     cartButton.style.display = 'none';
@@ -70,7 +71,7 @@ const noAuthorized = () => {
       values[key] = name.trim();
     }
 
-    saveUserData(values);
+    saveUserData('user', values);
     modalAuthClose();
     form.reset();
 
@@ -102,7 +103,9 @@ const noAuthorized = () => {
 
 // Проверка авторизации пользователя
 const checkOut = () => {
-  login = getUserData();
+  login = getUserData('user');
+
+  updateUserData();
 
   if (login) {
     authorized();

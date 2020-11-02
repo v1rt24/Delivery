@@ -1,11 +1,19 @@
+// Для валидации данных
 export const validateForm = (data) => {
   return data.trim().length !== 0;
 };
 
-export const getUserData = () => {
-  return  JSON.parse(localStorage.getItem('user')) || null;
+// Получение данных из localStorage
+export const getUserData = key => {
+  return JSON.parse(localStorage.getItem(key)) || null;
 };
 
-export const saveUserData = userData => {
-  localStorage.setItem('user', JSON.stringify(userData));
+// Запись данных в localStorage
+export const saveUserData = (key, userData) => {
+  localStorage.setItem(key, JSON.stringify(userData));
+};
+
+// Удаление данных из localStorage
+export const deleteUserData = key => {
+  localStorage.removeItem(key);
 };

@@ -1,6 +1,7 @@
 import { outputRestaurants } from './moduleCard/outputRestaurants.js';
 import { openGoods } from './moduleCard/openGoods.js';
 import { returnHome } from './moduleCard/returnHome.js';
+import { mySwiper } from './swipper.js';
 
 const
   cardsRestaurants = document.querySelector('.cards-restaurants'),
@@ -17,8 +18,9 @@ cardsRestaurants.addEventListener('click', openGoods);
 logo.addEventListener('click', returnHome);
 
 // Клик по кнопке назад в браузере
-window.addEventListener("popstate", function (event) {
+window.addEventListener('popstate', function (event) {
   returnHome();
+  mySwiper.init();
 }, false);
 
 
